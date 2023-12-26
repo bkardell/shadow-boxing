@@ -51,7 +51,7 @@ observer.observe(document.head, {
 
 updateGlobalStyles()
 
-export const OpenStylableElement = superclass => (class extends superclass {
+export const OpenStylable = superclass => (class extends superclass {
   connectedCallback () {
     try {
       if (super.connectedCallback) {
