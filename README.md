@@ -11,8 +11,8 @@ The optional modes can be set as
 |-----------------------------------------------|---------------:|
 | `<html shadow-style-mode="page-push">`        | All of the stylesheets in the head affect shadow trees automatically |
 | `<html shadow-style-mode="page-push-marked">` | Stylesheets in the head,  marked with the boolean `shadow-import` attribute affect shadow trees |
-| `<html shadow-style-mode="component-pull">`        |  All of the stylesheets in the head are pulled down by, and affect shadow trees **of elements that extend `OpenStyleableElement`** (exported by this module) automatically |
-| `<html shadow-style-mode="component-pull-marked">` |  All of the stylesheets in the head and marked with the boolean `shadow-import` attribute are pulled down by and affect shadow trees **of elements that extend `OpenStyleableElement`** (exported by this module) |
+| `<html shadow-style-mode="component-pull">`        |  All of the stylesheets in the head are pulled down by, and affect shadow trees **of elements that extend `OpenStyleable`** (exported by this module) automatically |
+| `<html shadow-style-mode="component-pull-marked">` |  All of the stylesheets in the head and marked with the boolean `shadow-import` attribute are pulled down by and affect shadow trees **of elements that extend `OpenStyleable`** (exported by this module) |
 
 
 The optional modes are of two main philosophies `page-push` and `component-pull`. The former pushes from the page into all shadow roots. 
