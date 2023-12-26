@@ -40,5 +40,6 @@ If that value is one of the `-marked` variants, choose which stylesheet(s) you'd
 * Sheets are seen as before other styles in the Shadow Roots, in original document order.  Thus, anything specified by the component wins either way, barring some use of `!important`
 
 
-This is a fork heavily inspired by Nolan Lawson's original [Open Stylable NPM Package](https://www.npmjs.com/package/open-stylable) which is, effectively the `pull-page` version. 
+This is a work heavily inspired by Nolan Lawson's original [Open Stylable NPM Package](https://www.npmjs.com/package/open-stylable) which is, effectively the key implementation parts of the `pull-page` version. 
+
 For uses of those modes, all of the documentation in [Nolan's README](https://github.com/nolanlawson/open-stylable/blob/master/README.md) applies heretoo, except that the baseclass is `OpenStyleableElement` here, rather than just `OpenStylable`.
