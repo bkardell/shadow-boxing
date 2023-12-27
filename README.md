@@ -34,6 +34,7 @@ If that value is one of the `-marked` variants, choose which stylesheet(s) you'd
 
 ### Notes:
 
+* Doesn't currently work with Declarative Shadow DOM
 * Changes to any of the the mode attribute has no effect, but the head is monitored for changes to styles and updated live
 * Marked versions will be more efficient, and less prone to accidental matches
 * Nothing about selector _matching_ changes. `button { ... }` will match in all roots, but `.foo button { ... }` will only match in the same root.
