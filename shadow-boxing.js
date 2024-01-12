@@ -3,7 +3,9 @@ const openStylableElements = new Set()
 const elementsToAnchors = new WeakMap()
 const delayedConnectedCallbackElements = new WeakSet()
 const mode = document.documentElement.getAttribute("shadow-style-mode")
-const filter = (mode == 'component-pull' || mode == "page-push") ? '' : '[shadow-import]' 
+const filter = (mode == 'component-pull' || mode == "page-push" || mode == "page-push-select") ? '' : '[shadow-import]' 
+const isValidPushMode = (mode == 'page-push-marked' || mode == 'page-push' || mode == 'page-push-select' || mode == 'page-push-select-marked')
+const isValidComponentPullMode = (mode == 'component-pull' || mode == 'component-pull-marked')
 
 // Use empty text nodes to know the start and end anchors of where we should insert cloned styles
 function getAnchors (element) {
@@ -24,6 +26,15 @@ function clearStyles (element) {
   }
 }
 
+function maybeSetStyles (element) {
+  if(mode == 'page-push-select' || mode == 'page-push-select-marked') {
+    if (element.hasAttribute('shadow-style-select')) {
+      setStyles(element)
+    } 
+  } else {
+    setStyles(element)
+  }
+}
 function setStyles (element) {
   const [, endAnchor] = getAnchors(element)
   for (const node of globalStyles) {
@@ -39,7 +50,8 @@ const observer = new MutationObserver(() => {
   updateGlobalStyles()
   for (const element of openStylableElements) {
     clearStyles(element)
-    setStyles(element)
+    
+    maybeSetStyles(element)
   }
 })
 observer.observe(document.head, {
@@ -58,13 +70,13 @@ export const OpenStylable = superclass => (class extends superclass {
         super.connectedCallback()
       }
     } finally {
-      if (mode == 'component-pull' || mode == 'component-pull-marked') {
+      if (isValidComponentPullMode) {
         openStylableElements.add(this)
         if (this.shadowRoot) {
-          setStyles(this)
+          maybeSetStyles(this)
         } else { // if shadowRoot doesn't exist yet, wait to see if it gets added in connectedCallback
           delayedConnectedCallbackElements.add(this) // keep track of which elements needed a delay
-          Promise.resolve().then(() => setStyles(this))
+          Promise.resolve().then(() => maybeSetStyles(this))
         }
       }
     }
@@ -76,7 +88,7 @@ export const OpenStylable = superclass => (class extends superclass {
         super.disconnectedCallback()
       }
     } finally {
-      if (mode == 'component-pull' || mode == 'component-pull-marked') {
+      if (isValidComponentPullMode) {
         openStylableElements.delete(this)
         if (delayedConnectedCallbackElements.has(this)) { // ensure our disconnected logic runs after our connected logic
           Promise.resolve().then(() => clearStyles(this))
@@ -88,12 +100,12 @@ export const OpenStylable = superclass => (class extends superclass {
   }
 })
 
-if (mode == 'page-push-marked' || mode == 'page-push') {
+if (isValidPushMode) {
   let old = Element.prototype.attachShadow
   Element.prototype.attachShadow = function () {
     let r = old.call(this, ...arguments)
     openStylableElements.add(this)
-    Promise.resolve().then(() => setStyles(this))
+    Promise.resolve().then(() => maybeSetStyles(this))
     return r
   }
 }
