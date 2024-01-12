@@ -34,7 +34,9 @@ and include it in your page.
 
 Add the `shadow-style-mode` attribute to the `<html>` element with your value of choice from the table above.
 
-If that value is one of the `-marked` variants, choose which stylesheet(s) you'd like to apply to shadow roots
+If that value is one of the `-marked` variants, choose which stylesheet(s) you'd like to apply to shadow roots and mark those `<link>` or `<style>` elements with the `shadow-import` attribute.
+
+If the value is one of the `select` variants, choose which elements you'd like to specificaly inject styles into and mark those elements with the `shadow-style-select` attribute.
 
 ### Notes:
 
