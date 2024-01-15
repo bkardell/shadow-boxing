@@ -15,6 +15,7 @@ You choose the mode by setting the `shadow-style-mode` on the root HTML element.
   <head>
     <link href="..." rel="stylesheet"></link>
     <style>...</style>
+    <script src="/shadow-boxing.js" type="module"></script>
     ...
 ```
 
@@ -37,6 +38,7 @@ There are currently 6 "modes", but really they are mostly permutations of a few 
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
+    <script src="/shadow-boxing.js" type="module"></script>
     ...
 
 ```
@@ -52,6 +54,7 @@ Just as there is a `page-push` and a `page-push-marked` there is a `page-push-se
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
+    <script src="/shadow-boxing.js" type="module"></script>
     ...
   </head>
   <body>
@@ -76,6 +79,7 @@ Similarly there is a `component-pull` and a `component-pull-marked`. The big dif
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
+    <script src="/shadow-boxing.js" type="module"></script>
     ...
   </head>
   <body>
