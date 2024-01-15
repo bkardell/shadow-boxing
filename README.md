@@ -1,9 +1,95 @@
 # Shadow-Boxing.js
-A small (<100LOC) module/library for enabling a page's styles to
+A small (~100LOC) module/library for enabling a page's styles to
 influence the (open) Shadow DOM defaults. 
 
-It supports several "modes". A page may specify one via an attribute on the `<html>` element
-`shadow-style-mode`.  Changing the attribute after the fact has no effect.  
+It supports numerous 'modes' for exploring different kinds of "open stylable Shadow Roots".
+
+You choose the mode by setting the `shadow-style-mode` on the root HTML element. For example, the simplest:
+
+```
+<html shadow-style-mode="page-push">
+  <!-- 
+   All of the stylesheets (initially) in the head 
+   affect will affect all shadow trees automatically now 
+  -->
+  <head>
+    <link href="..." rel="stylesheet"></link>
+    <style>...</style>
+    ...
+```
+
+There are currently 6 "modes", but really they are mostly permutations of a few basic ideas: "all" vs "marked" and "page-push" vs "component-pull".  
+
+* [Modes explained](#modes-explained)
+* [Get started](#get-started)
+* [Modes reference table](#modes-reference-table)
+* [Notes](#notes)
+
+
+## Modes explained
+### all vs *-marked 
+
+3 of the 6 modes end in `-marked`.  This simply directs that rather than adding all of the styesheets from the head into each Shadow DOM, only add those marked with the `shadow-import` attribute.  For example, compare this with the previous...
+
+
+```
+<html shadow-style-mode="page-push-marked">
+  <head>
+    <style>/* These won't apply */</style>
+    <style shadow-import>/* These will apply */</style>
+    ...
+
+```
+
+
+### page-push-select-*
+
+Just as there is a `page-push` and a `page-push-marked` there is a `page-push-select` and `page-push-select-marked`.  The major difference between these is that the `-select-` family relies on the page author to "select" which elements should have stylesheets injected into them, by adding a `shadow-style-select` to them, like so...
+
+
+```
+<html shadow-style-mode="page-push-select-marked">
+  <head>
+    <style>/* These won't apply */</style>
+    <style shadow-import>/* These will apply */</style>
+    ...
+  </head>
+  <body>
+     <x-foo><!-- Doesn't apply to Shadow DOMs by default --></x-foo>
+     <x-bar shadow-style-select><!-- applies to this Shadow DOM --></x-bar>
+     <x-foo><!-- Not this one --></x-foo>
+     <x-blip shadow-style-select><!-- Yup, this one... --></x-blip>
+     ...
+```
+
+
+
+### component-pull-*
+
+Similarly there is a `component-pull` and a `component-pull-marked`. The big difference here is that this operates under the philosophy that it is the component's job to actually opt into this behavior by subclassing a special `OpenStyleable` class, which actually does the work.
+
+
+
+ 
+```
+<html shadow-style-mode="component-pull-marked">
+  <head>
+    <style>/* These won't apply */</style>
+    <style shadow-import>/* These will apply */</style>
+    ...
+  </head>
+  <body>
+     <!-- Will only apply to elements which extended the `OpenStylable` class -->
+     <x-foo><!-- maybe? --></x-foo>
+     ...
+```
+
+The component pull model is also inherently limited to use on Custom Elements and cannot be used to style a Shadow DOM on any  native element.
+
+
+
+
+## Modes reference table
 
 The optional modes can be set as
 
