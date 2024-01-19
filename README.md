@@ -15,7 +15,7 @@ You choose the mode by setting the `shadow-style-mode` on the root HTML element.
   <head>
     <link href="..." rel="stylesheet"></link>
     <style>...</style>
-    <script src="/shadow-boxing.js" type="module"></script>
+    <script src="/shadow-boxing.js"></script>
     ...
 ```
 
@@ -38,7 +38,7 @@ There are currently 6 "modes", but really they are mostly permutations of a few 
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
-    <script src="/shadow-boxing.js" type="module"></script>
+    <script src="/shadow-boxing.js"></script>
     ...
 
 ```
@@ -54,7 +54,7 @@ Just as there is a `page-push` and a `page-push-marked` there is a `page-push-se
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
-    <script src="/shadow-boxing.js" type="module"></script>
+    <script src="/shadow-boxing.js"></script>
     ...
   </head>
   <body>
@@ -79,7 +79,7 @@ Similarly there is a `component-pull` and a `component-pull-marked`. The big dif
   <head>
     <style>/* These won't apply */</style>
     <style shadow-import>/* These will apply */</style>
-    <script src="/shadow-boxing.js" type="module"></script>
+    <script src="/shadow-boxing.js"></script>
     ...
   </head>
   <body>
@@ -103,8 +103,8 @@ The optional modes can be set as
 | `<html shadow-style-mode="page-push-marked">` | Stylesheets in the head,  marked with the boolean `shadow-import` attribute affect shadow trees |
 | `<html shadow-style-mode="page-push-select">` | All of the stylesheets in the head affect shadow trees on host elements which have a `shadow-style-select` attribute on them |
 | `<html shadow-style-mode="page-push-select-marked">` | Stylesheets in the head,  marked with the boolean `shadow-import` attribute affect shadow trees on host elements which have a `shadow-style-select` attribute on them |
-| `<html shadow-style-mode="component-pull">`        |  All of the stylesheets in the head are pulled down by, and affect shadow trees **of elements that extend `OpenStyleable`** (exported by this module) automatically |
-| `<html shadow-style-mode="component-pull-marked">` |  All of the stylesheets in the head and marked with the boolean `shadow-import` attribute are pulled down by and affect shadow trees **of elements that extend `OpenStyleable`** (exported by this module) |
+| `<html shadow-style-mode="component-pull">`        |  All of the stylesheets in the head are pulled down by, and affect shadow trees **of elements that extend `OpenStyleable`** (provided by the library) automatically |
+| `<html shadow-style-mode="component-pull-marked">` |  All of the stylesheets in the head and marked with the boolean `shadow-import` attribute are pulled down by and affect shadow trees **of elements that extend `OpenStyleable`** (provided by the library) |
 
 
 The optional modes are of two main philosophies `page-push` and `component-pull`. The former pushes from the page into all shadow roots. 
@@ -115,11 +115,11 @@ The later requires elements that want to accept styles from the outer page subcl
 
 ## Get started
 
-To get started, [grab the module](/shadow-boxing.js) 
+To get started, [grab the script](/shadow-boxing.js) 
 and include it in your page.
 
 ```html
-  <script src="/shadow-boxing.js" type="module"></script>
+  <script src="/shadow-boxing.js"></script>
 ```
 
 Add the `shadow-style-mode` attribute to the `<html>` element with your value of choice from the table above.
@@ -139,4 +139,4 @@ If the value is one of the `select` variants, choose which elements you'd like t
 
 This is a work heavily inspired by Nolan Lawson's original [Open Stylable NPM Package](https://www.npmjs.com/package/open-stylable) which is, effectively the key implementation parts of the `pull-page` version. 
 
-For uses of those modes, all of the documentation in [Nolan's README](https://github.com/nolanlawson/open-stylable/blob/master/README.md) applies here too.
+For uses of the `component-pull-*` modes, all of the documentation in [Nolan's README](https://github.com/nolanlawson/open-stylable/blob/master/README.md) applies here too, except that by default there is no module export (there is a version ending in -module.js included here as well though if you prefer). Really the main thing this adds to Nolan's is simply that it requires an attribute on the HTML which is useful for us as a thing to find in the wild for study.
